@@ -26,14 +26,14 @@ body {
     pointer-events: none;
 }
 #margen-top{
-    height: 0vh;
+    height: 20vh;
 }
 #container{
     margin-top: 3%;
     /* padding-top: 50%; */
     width: 100%;
     height: auto;
-    padding-left: 9%;
+    padding-left: 10%;
     padding-right: 2%;
 }
 .recuadro{
@@ -42,7 +42,7 @@ body {
     border-color: rgb(255, 255, 255);
     border-style: solid;
     z-index: 0;
-    margin: .8%;
+    margin: .6%;
     -webkit-box-shadow: inset 0px 0px 61px -4px rgba(0,0,0,1);
     -moz-box-shadow: inset 0px 0px 61px -4px rgba(0,0,0,1);
     box-shadow: inset 0px 0px 61px -4px rgba(0,0,0,1);
@@ -120,4 +120,40 @@ body {
 #searchButton:hover {
     transition: 0.3s ease-in;
     background-color: rgba(204, 204, 204, 0.5);
+}
+#sinResultados {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    /* font-family: 'Comfortaa', cursive; */
+}
+/* pkmdata.php */
+#containerData{
+    margin-top: 0%;
+    /* padding-top: 50%; */
+    width: 100%;
+    height: 80vh;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+.carousel-inner{
+    margin-left: 0%;
+    margin-right: 0%;
+    width: 100%;
+}
+
+.dataContainer{
+    width: 82%;
+    height: 67vh;
+    margin-left: 9%;
+    /* background-color: aliceblue; */
+    border-style: solid;
+}
+.carousel-control-prev{
+    width: 4%;
+    margin-left: 5%;
+}
+.carousel-control-next{
+    width: 4%;
+    margin-right: 5%;
 }

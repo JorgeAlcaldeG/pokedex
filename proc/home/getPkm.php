@@ -1,16 +1,20 @@
 <?php
-// var_dump($_POST);
 $src="";
+$showPKM = "SELECT pokemon_name, pokemon_id FROM tbl_pokemon ";
 if($_POST["src"]!=""){
     $src = $_POST["src"]."%";
-    $showPKM = "SELECT pokemon_name, pokemon_id FROM tbl_pokemon WHERE pokemon_name like :src";
-}else{
-    $showPKM = "SELECT pokemon_name, pokemon_id FROM tbl_pokemon";
+    $showPKM .= " WHERE pokemon_name like :src";
 }
 include("../conexion.php");
 $stmt = $conn -> prepare($showPKM);
-$stmt -> bindParam(":src", $src);
+if($_POST["src"]!=""){
+    $stmt -> bindParam(":src", $src);
+}
 $stmt -> execute();
 $Allpkm = $stmt -> fetchAll();
-echo json_encode($Allpkm);
+if($stmt ->rowCount()==0){
+    echo "Sin resultados";
+}else{
+    echo json_encode($Allpkm);
+}
 

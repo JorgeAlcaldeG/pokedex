@@ -6,9 +6,10 @@ function getPkm(){
     ajax.open('POST', './proc/home/getPkm.php');
     ajax.onload=function(){
         if(ajax.readyState ==4 && ajax.status==200){
-            // console.log(ajax.responseText);
+            // Cargamos los datos
             if(ajax.responseText != "Sin resultados"){
                 var json = JSON.parse(ajax.responseText);
+                // Cargamos cada recuadro
                 var res = '<div class="row">'
                 json.forEach(function(item){
                     res += '<div class="col-2 recuadro" onclick=pkmData('+item.pokemon_id+')>'
@@ -18,6 +19,7 @@ function getPkm(){
                 res +="</div>"
                 document.getElementById("container").innerHTML = res;
             }else{
+                // No hay resultados
                 var res = "<p id='sinResultados'> No se han encontrado resultados</p>";
                 document.getElementById("container").innerHTML = res;
             }

@@ -9,16 +9,21 @@
     <title>Pokedex</title>
 </head>
 <body>
+    <!-- Marco de la pantalla -->
     <div id="panelfixed"></div>
+    <!-- Buscador -->
     <div class="search">
         <input id="searchinput" type="text" name="pokemon" onkeyup="getPkm()" placeholder="Buscar Pokemon...">
         <input type="image" src="./resources/interfaz/searchButton.png" alt="Submit" id="searchButton">
     </div>
+    <!-- Lista de pokemons -->
         <div id="container">
         </div>
+        <!-- Margen de abajo -->
         <br>
         <br>
     <script src="./js/index.js"></script>
+    <!-- Cargar todos lo spokemons -->
     <script>
         window.onload = getPkm();
     </script>

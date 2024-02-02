@@ -31,6 +31,12 @@
     }else{
         $habOculta = "No tiene";
     }
+    // Stats
+    $statsQuery = "SELECT * FROM tbl_stats WHERE stats_id = :id";
+    $stmtStats = $conn -> prepare($statsQuery);
+    $stmtStats -> bindParam(":id", $id);
+    $stmtStats -> execute();
+    $stats = $stmtStats ->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,9 +50,10 @@
     <title><?php echo $pkm["Nombre"];?></title>
 </head>
 <body>
+    <img src="./resources/interfaz/back.png" id="backBtn">
     <!-- Marco y margen de arriba -->
     <div id="panelfixed"></div>
-    <div id="margen-top"></div>
+    <div id="margen-topData"></div>
     <!-- contenedor con los datos -->
     <div id="containerData">
         <div id="carouselExample" class="carousel slide">
@@ -56,10 +63,11 @@
                         <!-- INFO GENERAL -->
                         <div class="row">
                             <div class="col-4">
-                                <img id="pkIMG" src="./resources/sprite/<?php echo $id ?>.png" alt="" srcset="">
+                                <img id="pkIMG" src="./resources/sprite/<?php echo $id ?>.png" alt="" srcset="" onclick="playCry(<?php echo $id ?>)">
+                                <p class="info">Pulsa la imagen para reproducir su grito</p>
                             </div>
                             <div class="col-8">
-                                <h1 id="pkmTitulo">Información general</h1>
+                                <h1 class="pkmTitulo">Información general</h1>
                                 <div class="row">
                                     <div class="col-6">
                                         <h2>Nombre</h2>
@@ -88,7 +96,41 @@
                 <div class="carousel-item">
                     <div class="dataContainer">
                         <!-- STATS -->
-                        <h1>prueba2</h1>
+                        <div class="row">
+                            <div class="col-4">
+                                <h1 class="pkmTitulo">Stats base</h1>
+                                <div id="statsContainer">
+                                    <!-- Vida -->
+                                    <p class="infostat">Vida - <strong><?php echo $stats["ps"] ?></strong></p>
+                                    <div class="barrita" style="width: <?php echo $stats["ps"]*1.2 ?>px"></div>
+                                    <!-- Ataque -->
+                                    <p class="infostat">Ataque - <strong><?php echo $stats["atk"] ?></strong></p>
+                                    <div class="barrita" style="width: <?php echo $stats["atk"]*1.2 ?>px"></div>
+                                    <!-- Defensa -->
+                                    <p class="infostat">Defensa - <strong><?php echo $stats["def"] ?></strong></p>
+                                    <div class="barrita" style="width: <?php echo $stats["def"]*1.2 ?>px"></div>
+                                    <!-- Ataque ESP -->
+                                    <p class="infostat">Ataque esp. - <strong><?php echo $stats["spa"] ?></strong></p>
+                                    <div class="barrita" style="width: <?php echo $stats["spa"]*1.2 ?>px"></div>
+                                    <!-- Defensa ESP -->
+                                    <p class="infostat">Defensa esp. - <strong><?php echo $stats["spd"] ?></strong></p>
+                                    <div class="barrita" style="width: <?php echo $stats["spd"]*1.2 ?>px"></div>
+                                    <!-- Velocidad -->
+                                    <p class="infostat">Velocidad - <strong><?php echo $stats["spe"] ?></strong></p>
+                                    <div class="barrita" style="width: <?php echo $stats["spe"]*1.2 ?>px"></div>
+                                    <!-- Total -->
+                                    <p class="infostat">Total - <strong><?php echo $stats["total"] ?></strong></p>
+                                    <!-- <div class="barrita" style="width: <?php echo $stats["total"]*1.5 ?>px; background-color:green"></div> -->
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <h1 class="pkmTitulo">Calculadora de stats</h1> 
+                                <div id="calContainer">
+
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -108,5 +150,6 @@
             </button>
         </div>
     </div>
+    <script src="./js/pkmData.js"></script>
 </body>
 </html>

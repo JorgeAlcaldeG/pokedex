@@ -1,5 +1,15 @@
 /* Fondo  */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 ::-webkit-scrollbar {
     display: none;
 }
@@ -28,6 +38,12 @@ body {
     overflow-x: hidden;
     overflow-y: hidden;
     overflow-y: scroll;
+}
+p{
+    color: white;
+}
+label{
+    color: white;
 }
 #panelfixed {
     background-image: url(../interfaz/Marco.png);
@@ -71,7 +87,7 @@ body {
 }
 .recuadro:hover{
     transition: all .2s ease-out;
-    background-color:rgba(255, 255, 255, 1);
+    background-color:rgb(197, 197, 197);
 }
 .pkmName{
     margin-top: 0%;
@@ -101,8 +117,8 @@ body {
 #searchinput {
     text-indent: 10px;
     width: 50%;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    /* border-radius: 10px; */
+    border-radius: 10px;
     height: 50px;
     border-width: 2px;
     border-color: white;
@@ -235,6 +251,7 @@ float: right;
     margin-bottom: 0%;
     margin-left: 10%;
 }
+/* Sección de stats */
 #statsContainer{
     border-color: rgb(255, 255, 255);
     border-style: solid;
@@ -259,9 +276,53 @@ float: right;
     -moz-box-shadow: inset 0px 0px 31px -4px rgb(255, 255, 255);
     box-shadow: inset 0px 0px 31px -4px rgb(255, 255, 255);
     border-radius: 25px;
-    height: 39vh;
+    height: 40vh;
     margin-right: 3%;
-    padding-top: 5%;
+    padding-top: 2%;
+    margin-top: 7%;
+}
+#natu{
+    margin-left: 30%;
+}
+.statsInput{
+    width: 7%;
+}
+.statsInputTable{
+    width: 60%;
+}
+.statsInputTable2{
+    width: 50%;
+}
+.statsInputTableTotal{
+    width: 50%;
+}
+.statLabel{
+    color: white;
+    margin-left: 20%;
+    text-align: right;
+}
+.calctable{
+    margin-left: 20%;
+    width: 60%;
+    font-size: 12px;
+}
+.headerTbl{
+    color: white;
+}
+.habTitulo{
+    text-align: center;
+    margin-bottom: 0%;
+    font-weight: bolder;
+    
+}
+.habDesc{
+    text-align: center;
+    font-size: 13px;
+}
+.rowDesc{
+    margin-top: 0%;
+    padding-left: 1%;
+    padding-right: 1%;
 }
 #backBtn{
     cursor: pointer;

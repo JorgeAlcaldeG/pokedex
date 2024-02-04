@@ -13,8 +13,19 @@
     $stmt -> execute();
     $pkm = $stmt ->fetch();
     $icon = "./resources/icon/$id.png";
+    // Info de la habilidad 1
+    $sqlhab = "SELECT ability_desc FROM tbl_ability WHERE ability_name_es = :hab";
+    $stmthab = $conn -> prepare($sqlhab);
+    $stmthab ->bindParam(":hab",$pkm["Habilidad1"]);
+    $stmthab ->execute();
+    $hab1 = $stmthab -> fetchColumn();
     if($pkm["Habilidad1"]!="" && $pkm["Habilidad2"]!=""){
         $hab = $pkm["Habilidad1"]." - ".$pkm["Habilidad2"];
+        $sqlhab = "SELECT ability_desc FROM tbl_ability WHERE ability_name_es = :hab";
+        $stmthab = $conn -> prepare($sqlhab);
+        $stmthab ->bindParam(":hab",$pkm["Habilidad2"]);
+        $stmthab ->execute();
+        $hab2 = $stmthab -> fetchColumn();
     }else{
         $hab = $pkm["Habilidad1"];
     }
@@ -28,6 +39,12 @@
     }
     if($pkm["HabilidadOculta"]!=""){
         $habOculta = $pkm["HabilidadOculta"];
+        $hab = $pkm["Habilidad1"]." - ".$pkm["Habilidad2"];
+        $sqlhab = "SELECT ability_desc FROM tbl_ability WHERE ability_name_es = :hab";
+        $stmthab = $conn -> prepare($sqlhab);
+        $stmthab ->bindParam(":hab",$habOculta);
+        $stmthab ->execute();
+        $habOc = $stmthab -> fetchColumn();
     }else{
         $habOculta = "No tiene";
     }
@@ -37,6 +54,11 @@
     $stmtStats -> bindParam(":id", $id);
     $stmtStats -> execute();
     $stats = $stmtStats ->fetch();
+
+    $natuSQL = "SELECT * FROM tbl_naturalezas";
+    $natuStmt = $conn ->prepare($natuSQL);
+    $natuStmt -> execute();
+    $naturalezas = $natuStmt ->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +72,12 @@
     <title><?php echo $pkm["Nombre"];?></title>
 </head>
 <body>
+    <input type="hidden" name="vida" id="vida"value=<?php echo $stats["ps"] ?>>
+    <input type="hidden" name="atk" id="atk"value=<?php echo $stats["atk"] ?>>
+    <input type="hidden" name="def" id="def"value=<?php echo $stats["def"] ?>>
+    <input type="hidden" name="spa" id="spa"value=<?php echo $stats["spa"] ?>>
+    <input type="hidden" name="spd" id="spd"value=<?php echo $stats["spd"] ?>>
+    <input type="hidden" name="spe" id="spe"value=<?php echo $stats["spe"] ?>>
     <img src="./resources/interfaz/back.png" id="backBtn">
     <!-- Marco y margen de arriba -->
     <div id="panelfixed"></div>
@@ -124,13 +152,122 @@
                                 </div>
                             </div>
                             <div class="col-8">
-                                <h1 class="pkmTitulo">Calculadora de stats</h1> 
+                                <!-- <h1 class="pkmTitulo">Calculadora de stats</h1>  -->
                                 <div id="calContainer">
-
+                                    <select name="natu" id="natu">
+                                        <option value="0">Naturalezas</option>
+                                        <?php
+                                            foreach ($naturalezas as $natu) {
+                                                if($natu["sube"] ==""){
+                                                    echo'<option value="0">'.$natu["nom_natu"].' (neutra)</strong></option>';
+                                                }else{
+                                                    echo'<option value="'.$natu["sube"].'-'.$natu["baja"].'">'.$natu["nom_natu"].' (+'.$natu["sube"].'-'.$natu["baja"].')</strong></option>';
+                                                }
+                                            }
+                                        ?>
+                                    </select>
+                                    <label for="lvl">Nivel:</label>
+                                    <input type="number" name="lvl" id="lvl" value="50" class="statsInput">
+                                    <br>
+                                    <br>
+                                    <table class="calctable">
+                                        <tr>
+                                            <td width="15%"> </td>
+                                            <td class="headerTbl">Ivs</td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td class="headerTbl">Evs</td>
+                                            <td class="headerTbl">Total</td>
+                                        </tr>
+                                        <!-- Vida -->
+                                        <tr>
+                                            <td><label for="Vida" class="statLabel">Vida</label></td>
+                                            <td><input type="number"id="hpIv"value = 31 min=0 max=31 class="statsInputTable"></td>
+                                            <td><input type="range"min=0 max=252 value=0 oninput="document.getElementById('hpEv').value = this.value" id="hprange"></td>
+                                            <td> </td>
+                                            <td><input type="number"value = 0 max=252 id="hpEv" min=0 oninput="document.getElementById('hprange').value = this.value" class="statsInputTable2"></td>
+                                            <td><input type="number"value = 0 onKeyDown="return false" class="statsInputTable2" id="hpTotal"></td>
+                                        </tr>
+                                        <!-- Ataque -->
+                                        <tr>
+                                            <td><label for="Ataque" class="statLabel">Ataque</label></td>
+                                            <td><input type="number"id="AtkIv"value = 31 min=0 max=31 class="statsInputTable"></td>
+                                            <td><input type="range"min=0 max=252 value=0 oninput="document.getElementById('AtkEv').value = this.value" id="Atkrange"></td>
+                                            <td> </td>
+                                            <td><input type="number"value = 0 max=252 id="AtkEv" min=0 oninput="document.getElementById('Atkrange').value = this.value" class="statsInputTable2"></td>
+                                            <td><input type="number"value = 0 onKeyDown="return false" class="statsInputTable2" id="AtkTotal"></td>
+                                        </tr>
+                                        <!-- Defensa -->
+                                        <tr>
+                                            <td><label for="Defensa" class="statLabel">Defensa</label></td>
+                                            <td><input type="number"id="defIv"value = 31 min=0 max=31 class="statsInputTable"></td>
+                                            <td><input type="range"min=0 max=252 value=0 oninput="document.getElementById('defEv').value = this.value" id="defrange"></td>
+                                            <td> </td>
+                                            <td><input type="number"value = 0 max=252 id="defEv" min=0 oninput="document.getElementById('defrange').value = this.value" class="statsInputTable2"></td>
+                                            <td><input type="number"value = 0 onKeyDown="return false" class="statsInputTable2" id="defTotal"></td>
+                                        </tr>
+                                        <!-- Ataque esp -->
+                                        <tr>
+                                            <td><label for="spA" class="statLabel">Atk esp.</label></td>
+                                            <td><input type="number"id="spaIv"value = 31 min=0 max=31 class="statsInputTable"></td>
+                                            <td><input type="range"min=0 max=252 value=0 oninput="document.getElementById('spaEv').value = this.value" id="sparange"></td>
+                                            <td> </td>
+                                            <td><input type="number"value = 0 max=252 id="spaEv" min=0 oninput="document.getElementById('sparange').value = this.value" class="statsInputTable2"></td>
+                                            <td><input type="number"value = 0 onKeyDown="return false" class="statsInputTable2" id="spaTotal"></td>
+                                        </tr>
+                                        <!-- Defensa esp -->
+                                        <tr>
+                                            <td><label for="spD" class="statLabel">Def esp.</label></td>
+                                            <td><input type="number"id="spdIv"value = 31 min=0 max=31 class="statsInputTable"></td>
+                                            <td><input type="range"min=0 max=252 value=0 oninput="document.getElementById('spdEv').value = this.value" id="spdrange"></td>
+                                            <td> </td>
+                                            <td><input type="number"value = 0 max=252 id="spdEv" min=0 oninput="document.getElementById('spdrange').value = this.value" class="statsInputTable2"></td>
+                                            <td><input type="number"value = 0 onKeyDown="return false" class="statsInputTable2" id="spdTotal"></td>
+                                        </tr>
+                                        <!-- Velocidad -->
+                                        <tr>
+                                            <td><label for="spe" class="statLabel">Velocidad</label></td>
+                                            <td><input type="number"id="speIv"value = 31 min=0 max=31 class="statsInputTable"></td>
+                                            <td><input type="range"min=0 max=252 value=0 oninput="document.getElementById('speEv').value = this.value" id="sperange"></td>
+                                            <td> </td>
+                                            <td><input type="number"value = 0 max=252 id="speEv" min=0 oninput="document.getElementById('sperange').value = this.value" class="statsInputTable2"></td>
+                                            <td><input type="number"value = 0 onKeyDown="return false" class="statsInputTable2" id="speTotal"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td> </td>
+                                            <td class="statLabel">Totales</td>
+                                            <td><input type="number" name="totalEv" id="totalEv"class="statsInputTable2"></td>
+                                            <td><input type="number" name="total" id="total"class="statsInputTableTotal"></td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                         <hr>
+                        <!-- Habilidades -->
+                        <div class="row rowDesc">
+                            <div class="col">
+                                <p class="habTitulo"><?php echo $pkm["Habilidad1"]; ?></p>
+                                <p class="habDesc"><?php echo $hab1; ?></p>
+                            </div>
+                            <?php
+                                if($pkm["Habilidad2"] !=""){
+                                    echo'<div class="col">';
+                                    echo'<p class="habTitulo">'.$pkm["Habilidad2"].'</p>';
+                                    echo '<p class="habDesc">'.$hab2.'</p>';
+                                    echo'</div>';
+                                }
+                                if($pkm["HabilidadOculta"] !=""){
+                                    echo'<div class="col">';
+                                    echo'<p class="habTitulo">'.$pkm["HabilidadOculta"].'</p>';
+                                    echo '<p class="habDesc">'.$habOc.'</p>';
+                                    echo'</div>';
+                                }
+
+                            ?>
+                        </div>
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -151,5 +288,6 @@
         </div>
     </div>
     <script src="./js/pkmData.js"></script>
+    <script>window.onload = getStats()</script>
 </body>
 </html>

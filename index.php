@@ -14,7 +14,7 @@
     <!-- Buscador -->
     <div class="search">
         <input id="searchinput" type="text" name="pokemon" onkeyup="getPkm()" placeholder="Buscar Pokemon...">
-        <input type="image" src="./resources/interfaz/searchButton.png" alt="Submit" id="searchButton">
+        <!-- <input type="image" src="./resources/interfaz/searchButton.png" alt="Submit" id="searchButton"> -->
     </div>
     <!-- Lista de pokemons -->
         <div id="container">

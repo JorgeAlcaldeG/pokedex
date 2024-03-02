@@ -20,6 +20,7 @@ input[type="range"]{
     appearance: none;
     background: transparent;
     cursor: pointer;
+    /* filter: drop-shadow(0px 0px 1px #ffffff); */
 }
 input[type="range"]::-webkit-slider-runnable-track {
     background: white;
@@ -41,8 +42,6 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 50px;   
     border-color: white;
     border-style: solid;
-    -webkit-box-shadow: 0px 0px 12px 0px rgba(255,255,255,0.5);
-    box-shadow: 0px 0px 12px 0px rgba(255,255,255,0.5);
 }
 input[type="range"]::-moz-range-thumb {
     border: none; /*Removes extra border that FF applies*/
@@ -53,7 +52,6 @@ input[type="range"]::-moz-range-thumb {
     border-radius: 50px;
     border-color: white;
     border-style: solid;
-    -moz-box-shadow: 0px 0px 12px 0px rgba(255, 255, 255, 0.5);
 }
 /* Columnas */
 .fila:after {
@@ -247,6 +245,9 @@ label{
     padding: 0%;
     cursor: pointer;
     transition: all .2s ease-out;
+}
+.recuadro:hover{
+    filter: drop-shadow(0px 0px 15px #ffffff);
 }
 .alturaCuadro5{
     height: 29vh;

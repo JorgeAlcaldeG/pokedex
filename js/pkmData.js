@@ -6,54 +6,60 @@ function playCry(id){
     audio.play();
 }
 
-// document.querySelectorAll("input").addEventListener("change",()=>{getStats()})
+var allInputs = document.querySelectorAll("input");
+console.log(allInputs[0]);
+for (let i = 0; i < allInputs.length; i++) {
+    allInputs[i].addEventListener("change",()=>{getStats()})
+    allInputs[i].addEventListener("keyup",()=>{getStats()})
+    allInputs[i].addEventListener("blur",()=>{getStats()})
+}
 document.getElementById("natu").addEventListener("change",()=>{getStats()})
-document.getElementById("lvl").addEventListener("keyup",()=>{getStats()})
-document.getElementById("lvl").addEventListener("change",()=>{getStats()})
+document.getElementById("lvl").addEventListener("blur",()=>{if(document.getElementById("lvl").value ==""){document.getElementById("lvl").value =1;getStats()}})
 // HP
-document.getElementById("hprange").addEventListener("change",()=>{getStats()})
-document.getElementById("hpEv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("hpIv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("hpEv").addEventListener("change",()=>{getStats()})
-document.getElementById("hpIv").addEventListener("change",()=>{getStats()})
 hpTotal=document.getElementById("hpTotal");
 // Ataque
-document.getElementById("Atkrange").addEventListener("change",()=>{getStats()})
-document.getElementById("AtkEv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("AtkIv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("AtkEv").addEventListener("change",()=>{getStats()})
-document.getElementById("AtkIv").addEventListener("change",()=>{getStats()})
 AtkTotal=document.getElementById("AtkTotal");
 // Defensa
-document.getElementById("defrange").addEventListener("change",()=>{getStats()})
-document.getElementById("defEv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("defIv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("defEv").addEventListener("change",()=>{getStats()})
-document.getElementById("defIv").addEventListener("change",()=>{getStats()})
 AtkTotal=document.getElementById("defTotal");
 // Ataque especial
-document.getElementById("sparange").addEventListener("change",()=>{getStats()})
-document.getElementById("spaEv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("spaIv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("spaEv").addEventListener("change",()=>{getStats()})
-document.getElementById("spaIv").addEventListener("change",()=>{getStats()})
 AtkTotal=document.getElementById("spaTotal");
 // Defensa especial
-document.getElementById("spdrange").addEventListener("change",()=>{getStats()})
-document.getElementById("spdEv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("spdIv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("spdEv").addEventListener("change",()=>{getStats()})
-document.getElementById("spdIv").addEventListener("change",()=>{getStats()})
 AtkTotal=document.getElementById("spdTotal");
 // Velocidad
-document.getElementById("sperange").addEventListener("change",()=>{getStats()})
-document.getElementById("speEv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("speIv").addEventListener("keyup",()=>{getStats()})
-document.getElementById("speEv").addEventListener("change",()=>{getStats()})
-document.getElementById("speIv").addEventListener("change",()=>{getStats()})
 AtkTotal=document.getElementById("speTotal");
-
+function valIv(iv){
+    var val = document.getElementById(iv)
+    if(val.value >31){
+        console.log("entra")
+        document.getElementById(iv).value = 31;
+    }
+    if(val.value <0){
+        document.getElementById(iv).value = 0;
+    }
+}
+function valEv(ev){
+    var val = document.getElementById(ev)
+    if(val.value >252){
+        console.log("entra")
+        document.getElementById(ev).value = 252;
+    }
+    if(val.value <0){
+        document.getElementById(ev).value = 0;
+    }
+}
 function getStats(){
+    if(document.getElementById("lvl").value > 100){
+        document.getElementById("lvl").value = 100
+    }
+    if(document.getElementById("lvl").value < 0){
+        document.getElementById("lvl").value = 1
+    }
+    ivList = ["hpIv","AtkIv","defIv","spaIv","spdIv"]
+    evList = ["hpEv","AtkEv","defEv","spaEv","speEv"]
+    for (let i = 0; i < ivList.length; i++) {
+        valIv(ivList[i]);
+        valEv(evList[i]);
+    }
     // Naturaleza
     var natu = document.getElementById("natu").value;
     natu = natu.split("-");

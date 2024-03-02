@@ -19,7 +19,7 @@
     $stmthab ->bindParam(":hab",$pkm["Habilidad1"]);
     $stmthab ->execute();
     $hab1 = $stmthab -> fetchColumn();
-    if($pkm["Habilidad1"]!="" && $pkm["Habilidad2"]!=""){
+    if($pkm["Habilidad2"]!=""){
         $hab = $pkm["Habilidad1"]." - ".$pkm["Habilidad2"];
         $sqlhab = "SELECT ability_desc FROM tbl_ability WHERE ability_name_es = :hab";
         $stmthab = $conn -> prepare($sqlhab);
@@ -39,7 +39,11 @@
     }
     if($pkm["HabilidadOculta"]!=""){
         $habOculta = $pkm["HabilidadOculta"];
-        $hab = $pkm["Habilidad1"]." - ".$pkm["Habilidad2"];
+        if($pkm["Habilidad2"]!=""){
+            $hab = $pkm["Habilidad1"]." - ".$pkm["Habilidad2"];
+        }else{
+            $hab = $pkm["Habilidad1"];
+        }
         $sqlhab = "SELECT ability_desc FROM tbl_ability WHERE ability_name_es = :hab";
         $stmthab = $conn -> prepare($sqlhab);
         $stmthab ->bindParam(":hab",$habOculta);
@@ -66,12 +70,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./resources/css/styles.css">
     <link rel='icon' type='image/x-icon' href="<?php echo $icon; ?>">
     <title><?php echo $pkm["Nombre"];?></title>
 </head>
-<body>
+<body class="fondo1">
     <input type="hidden" name="vida" id="vida"value=<?php echo $stats["ps"] ?>>
     <input type="hidden" name="atk" id="atk"value=<?php echo $stats["atk"] ?>>
     <input type="hidden" name="def" id="def"value=<?php echo $stats["def"] ?>>
@@ -80,7 +84,7 @@
     <input type="hidden" name="spe" id="spe"value=<?php echo $stats["spe"] ?>>
     <img src="./resources/interfaz/back.png" id="backBtn">
     <!-- Marco y margen de arriba -->
-    <div id="panelfixed"></div>
+    <div id="panelfixed" class="marco1"></div>
     <div id="margen-topData"></div>
     <!-- contenedor con los datos -->
     <div id="containerData">
@@ -274,6 +278,9 @@
                     <div class="dataContainer">
                         <!-- EVOLUCIÓN -->
                         <h1>prueba3</h1>
+                        <div class="row evoRow">
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -288,6 +295,11 @@
         </div>
     </div>
     <script src="./js/pkmData.js"></script>
-    <script>window.onload = getStats()</script>
+    <script src="./js/updateFrame.js"></script>
+    <script>window.onload = ()=>{ 
+        getStats();
+        updateFrame();
+        }
+    </script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+
 /* Fondo  */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -13,6 +14,74 @@ input[type=number] {
 ::-webkit-scrollbar {
     display: none;
 }
+/* INPUT RANGE */
+input[type="range"]{
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+    background: white;
+    height: 0.4rem;
+    border-radius: 10px;
+}
+input[type="range"]::-moz-range-track {
+    background: white;
+    height: 0.4rem;
+    border-radius: 10px;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: -6px; /* Centers thumb on the track */
+    background-color: #b7b7b77a;
+    height: 1.2rem;
+    width: 1.2rem;
+    border-radius: 50px;   
+    border-color: white;
+    border-style: solid;
+    -webkit-box-shadow: 0px 0px 12px 0px rgba(255,255,255,0.5);
+    box-shadow: 0px 0px 12px 0px rgba(255,255,255,0.5);
+}
+input[type="range"]::-moz-range-thumb {
+    border: none; /*Removes extra border that FF applies*/
+    border-radius: 0; /*Removes default border-radius that FF applies*/
+    background-color: #b7b7b77a;
+    height: .9rem;
+    width: .9rem;
+    border-radius: 50px;
+    border-color: white;
+    border-style: solid;
+    -moz-box-shadow: 0px 0px 12px 0px rgba(255, 255, 255, 0.5);
+}
+/* Columnas */
+.fila:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.column{
+    width: 16.666%;
+    float: left;
+}
+.column2{
+    width: 50%;
+    float: left;
+}
+.column5 {
+    width: 16.666%;
+    float: left;
+}
+.column4 {
+    width: 20%;
+    float: left; 
+}
+.column6{
+    width: 14.285%;
+    float: left;
+}
+
 hr{
     border-top: 5px solid rgba(255, 255, 255, 0.864);
     opacity: 100%;
@@ -30,7 +99,6 @@ h2{
     margin-right: 8%;
 }
 body {
-    background-image: url(../interfaz/fondo.gif);
     background-repeat: repeat;
     margin: 0;
     width: 100%;
@@ -39,6 +107,9 @@ body {
     overflow-y: hidden;
     overflow-y: scroll;
 }
+.fondo1{
+    background-image: url(../interfaz/fondo.gif);
+}
 p{
     color: white;
 }
@@ -46,7 +117,7 @@ label{
     color: white;
 }
 #panelfixed {
-    background-image: url(../interfaz/Marco.png);
+    /* background-image: url(../interfaz/Marco.png); */
     float: right;
     position: fixed;
     height: 100vh;
@@ -56,6 +127,12 @@ label{
     z-index: 2;
     pointer-events: none;
 }
+.marco1{
+    background-image: url(../interfaz/Marco1.png);
+}
+.marco2{
+    background-image: url(../interfaz/Marco2.png);
+}
 #margen-top{
     height: 20vh;
 }
@@ -63,15 +140,101 @@ label{
     height: 18vh;
 }
 #container{
-    margin-top: 3%;
+    margin-top: 2%;
     /* padding-top: 50%; */
     width: 100%;
     height: auto;
     padding-left: 10%;
     padding-right: 2%;
 }
+/* CONFIGURACIÓN */
+.configBtn{
+    position: fixed;
+    width: 2.5%;
+    float: right;
+    right: 5%;
+    top: 14%;
+    cursor: pointer;
+    transition: all 1s ease-out;
+    opacity: 70%;
+}
+.configBtn:hover{
+    transition: all .4s ease-out;
+    opacity: 100%;
+    filter: drop-shadow(0px 0px 3px #ffffff);
+}
+[type=radio] { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.frameconfimg{
+    width: 100%;
+}
+/* IMAGE STYLES */
+    [type=radio] + img {
+    cursor: pointer;
+}
+
+/* CHECKED STYLES */
+    [type=radio]:checked + img {
+    outline: 4px solid rgb(0, 0, 0);
+}
+.rotate {
+    -webkit-animation:spin 3s linear infinite;
+    -moz-animation:spin 3s linear infinite;
+    animation:spin 3s linear infinite;
+    animation-play-state: paused;
+}
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform:rotate(360deg);
+    }
+}
+/* MODAL */
+.modal-content{
+    margin-top: 25%;
+    background-color: rgba(232, 232, 232, 0.8);
+    width: 100%;
+    /* height: 10vh; */
+    border-radius: 20px;
+    border-style: solid;
+    border-color: white;
+    border-width: 3px;
+}
+.modal-header{
+    border-bottom-width: 3px;
+    border-bottom-color: white;
+}
+.modal-footer{
+    border-top-width: 3px;
+    border-top-color: white;
+}
+.confTitulo{
+    width: 100%;
+    text-align: center;
+    /* height: 15px; */
+    font-size: 26px;
+}
+.optConf{
+    color: black;
+}
+.modal-body{
+    text-align: center;
+}
 .recuadro{
-    height: 29vh;
     background-color:rgba(255, 255, 255, 0.5);
     border-color: rgb(255, 255, 255);
     border-style: solid;
@@ -84,6 +247,15 @@ label{
     padding: 0%;
     cursor: pointer;
     transition: all .2s ease-out;
+}
+.alturaCuadro5{
+    height: 29vh;
+}
+.alturaCuadro4{
+    height: 33vh;
+}
+.alturaCuadro6{
+    height: 26vh;
 }
 .recuadro:hover{
     transition: all .2s ease-out;
@@ -187,8 +359,8 @@ label{
     border-style: solid;
     border-color: white;
     -webkit-box-shadow: inset 0px 0px 17px 2px rgba(255,255,255,1);
--moz-box-shadow: inset 0px 0px 17px 2px rgba(255,255,255,1);
-box-shadow: inset 0px 0px 17px 2px rgba(255,255,255,1);
+    -moz-box-shadow: inset 0px 0px 17px 2px rgba(255,255,255,1);
+    box-shadow: inset 0px 0px 17px 2px rgba(255,255,255,1);
 }
 .carousel-control-prev{
     width: 4%;

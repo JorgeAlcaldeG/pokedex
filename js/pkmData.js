@@ -1,6 +1,6 @@
-var audio = new Audio('./resources/audio/1.ogg');
 var backBtn = document.getElementById("backBtn");
 backBtn.addEventListener("click",()=>{window.location.href = "./";})
+var audio = new Audio();
 function playCry(id){
     audio.src = `./resources/audio/${id}.ogg`
     audio.play();
@@ -14,7 +14,8 @@ for (let i = 0; i < allInputs.length; i++) {
     allInputs[i].addEventListener("blur",()=>{getStats()})
 }
 document.getElementById("natu").addEventListener("change",()=>{getStats()})
-document.getElementById("lvl").addEventListener("blur",()=>{if(document.getElementById("lvl").value ==""){document.getElementById("lvl").value =1;getStats()}})
+var nivel = document.getElementById("lvl")
+nivel.addEventListener("blur",()=>{if(nivel.value ==""){nivel.value =1;getStats()}})
 // HP
 hpTotal=document.getElementById("hpTotal");
 // Ataque
@@ -30,7 +31,6 @@ AtkTotal=document.getElementById("speTotal");
 function valIv(iv){
     var val = document.getElementById(iv)
     if(val.value >31){
-        console.log("entra")
         document.getElementById(iv).value = 31;
     }
     if(val.value <0){
@@ -40,7 +40,6 @@ function valIv(iv){
 function valEv(ev){
     var val = document.getElementById(ev)
     if(val.value >252){
-        console.log("entra")
         document.getElementById(ev).value = 252;
     }
     if(val.value <0){

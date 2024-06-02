@@ -63,6 +63,39 @@
     $natuStmt = $conn ->prepare($natuSQL);
     $natuStmt -> execute();
     $naturalezas = $natuStmt ->fetchAll();
+    // Evoluciones
+    $evoSQL = "SELECT e.evo_preevo AS 'preevoID',p1.pokemon_name AS 'preevoName',
+    p2.pokemon_name AS 'evoName',e.evo_evoin AS 'evoID' FROM tbl_evolution `e` 
+    LEFT JOIN tbl_pokemon `p1` ON e.evo_preevo = p1.pokemon_id 
+    LEFT JOIN tbl_pokemon `p2` ON e.evo_evoin = p2.pokemon_id
+    WHERE evo_poke_id = :id"; 
+    $stmtEvo = $conn -> prepare($evoSQL);
+    $stmtEvo -> bindParam(":id", $id);
+    $stmtEvo -> execute();
+    $evo = $stmtEvo ->fetchAll();
+    $preevoId = $evo[0]["preevoID"];
+    // $evoId = $evo[0]["evoID"];
+
+    $evoData = '<div id = "evoContainer">';
+    if($preevoId != NULL){
+        $evoData .= "<div class='bloqueEvo'><img src='./resources/sprite/$preevoId.png'></div>";
+    }
+    $evoData .= "<div class='bloqueEvo'><img src='./resources/sprite/$id.png'></div>";
+    if($stmtEvo ->rowCount() >1){
+        foreach ($evo as $evoIn) {
+            if($evoIn["evoID"] != NULL){
+                $evoID = $evoIn["evoID"];
+                $evoData .= "<div class='bloqueEvo'><img src='./resources/sprite/$evoID.png'></div>";
+                $evoData .="</br>";
+            }
+        }
+    }else{
+        if($evo[0]["evoID"] != NULL){
+            $evoID = $evo[0]["evoID"];
+            $evoData .= "<div class='bloqueEvo'><img src='./resources/sprite/$evoID.png'></div>";
+        }
+    }
+    $evoData .= '</div>';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -277,9 +310,9 @@
                 <div class="carousel-item">
                     <div class="dataContainer">
                         <!-- EVOLUCIÓN -->
-                        <h1>prueba3</h1>
+                        <h1>Evoluciones</h1>
                         <div class="row evoRow">
-
+                        <?php echo $evoData; ?>
                         </div>
                     </div>
                 </div>
@@ -294,8 +327,10 @@
             </button>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
     <script src="./js/pkmData.js"></script>
     <script src="./js/updateFrame.js"></script>
+    <script src="./js/bgMove.js"></script>
     <script>window.onload = ()=>{ 
         getStats();
         updateFrame();

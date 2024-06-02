@@ -105,8 +105,10 @@ body {
     overflow-y: hidden;
     overflow-y: scroll;
 }
+
 .fondo1{
-    background-image: url(../interfaz/fondo.gif);
+    background-image: url(../interfaz/fondo.png);
+    /* backdrop-filter: hue-rotate(90 deg) */
 }
 p{
     color: white;
@@ -153,7 +155,7 @@ label{
     right: 5%;
     top: 14%;
     cursor: pointer;
-    transition: all 1s ease-out;
+    transition: all 1s ease -out;
     opacity: 70%;
 }
 .configBtn:hover{
@@ -283,11 +285,13 @@ label{
     padding-left: 31%;
 }
 
+
 #searchinput[type=text] {
     padding-left: 2%;
 }
 
 #searchinput {
+    font-weight: bolder;
     text-indent: 10px;
     width: 50%;
     /* border-radius: 10px; */
@@ -304,8 +308,12 @@ label{
 }
 
 #searchinput:focus {
-    /* outline-color: white; */
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.6421919109440651) 64%, rgba(154, 154, 154, 0.64) 100%);
+    outline-color: white;
+    /* border-color: white; */
+    filter: drop-shadow(0px 0px 5px #ffffff);
+}
+#searchinput:hover{
+    background: radial-gradient(circle, rgba(255, 255, 255, .7) 64%, rgba(154, 154, 154, .7) 100%);
 }
 
 ::placeholder {
@@ -374,6 +382,11 @@ label{
 #pkIMG{
     width: 100%;
     cursor: pointer;
+    transition: 0.2s ease-in;
+}
+#pkIMG:hover{
+    transition: 0.2s ease-in;
+    filter: drop-shadow(5px 5px 10px #000000);
 }
 #desTxt{
     margin-left: 2%;
@@ -510,4 +523,15 @@ float: right;
     transition: 0.3s ease-in;
     width: 5.5%;
     right: 90.5%;
+}
+/* Seeción evo */
+#evoContainer{
+    text-align:center;
+}
+.bloqueEvo{
+    display:inline;
+    height: 100%;
+}
+.bloqueMultiEvo{
+    height: 100%;
 }

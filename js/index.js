@@ -71,3 +71,25 @@ saveConfig.addEventListener("click",()=>{
     }
     xhttp.send(formdata);
 })
+
+window.onload = ()=>{
+    updateFrame();
+    modal();
+    getPkm();
+
+    fetch('./config.json')
+    .then((response) => response.json())
+    .then((json) => readjson(json));
+    function readjson(config){
+        var columnas = config['columnas'];
+        var marco = config['marco']
+        var columnsList = document.getElementById("column-list");
+        var frames = document.getElementsByClassName("framechk");
+        for (let i = 0; i < frames.length; i++) {
+            if(frames[i].value == marco){
+                frames[i].checked = true;
+            }
+        }
+        columnsList.value = columnas
+    }
+}

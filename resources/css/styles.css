@@ -525,6 +525,7 @@ float: right;
     right: 90.5%;
 }
 /* Seeción evo */
+/* OLD */
 #evoContainer{
     text-align:center;
 }
@@ -534,4 +535,67 @@ float: right;
 }
 .bloqueMultiEvo{
     height: 100%;
+}
+.evo{
+    width: 30%;
+}
+.fullEvo{
+    width: 20%;
+}
+
+/* TEST */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.noEvo {
+    width: 100%;
+    float: left;
+    position: relative;
+}
+.EvoTitulo{
+    text-align: center;
+    color: white;
+}
+.noEvoTxt{
+    text-align: center;
+    color: white;
+}
+.evoInt {
+    width: 20%;
+    float: left;
+    position: relative;
+}
+.evoIntImg{
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 30%;
+}
+.soloPre{
+    width: 33%;
+    float: left;
+    position: relative;
+}
+.soloPreImg{
+    width: 70%;
+    margin: 0 auto;
+}
+.flechaMargin{
+    margin-top: 70%;
+}
+.noEvoImg{
+    width: 30%;
+    margin: 0 auto;
+    margin-left: 35%;
+}
+
+.imgEfecto{
+    cursor: pointer;
+    transition: 0.2s ease-in;
+}
+.imgEfecto:hover{
+    transition: 0.2s ease-in;
+    filter: drop-shadow(5px 5px 10px #000000);
 }

@@ -151,3 +151,6 @@ function updateTotal(){
     document.getElementById("total").value = hpTotal+atkTotal+defTotal+spdTotal+speTotal;
 
 }
+function selectPkm(id){
+    location.href = `pkmdata.php?id=${id}`
+}

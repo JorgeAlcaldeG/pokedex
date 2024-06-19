@@ -65,7 +65,7 @@
     $naturalezas = $natuStmt ->fetchAll();
     // Evoluciones
     $evoSQL = "SELECT e.evo_preevo AS 'preevoID',p1.pokemon_name AS 'preevoName',
-    p2.pokemon_name AS 'evoName',e.evo_evoin AS 'evoId' FROM tbl_evolution `e` 
+    p2.pokemon_name AS 'evoName',e.evo_evoin AS 'evoID' FROM tbl_evolution `e` 
     LEFT JOIN tbl_pokemon `p1` ON e.evo_preevo = p1.pokemon_id 
     LEFT JOIN tbl_pokemon `p2` ON e.evo_evoin = p2.pokemon_id
     WHERE evo_poke_id = :id"; 
@@ -75,87 +75,44 @@
     $evo = $stmtEvo ->fetchAll();
     $preevoId = $evo[0]["preevoID"];
     $preevoName = $evo[0]["preevoName"];
-    // $evoId = $evo[0]["evoId"];
+    // $evoId = $evo[0]["evoID"];
 
-    $evoFases="";
-    if($preevoId == NULL && $evo[0]["evoId"] == NULL){
-        // Sin evoluciones
+    $evoData = '<div id = "evoContainer">';
+    $noEvo = "";
+    if($preevoId == NULL && $evo[0]["evoID"] == NULL){
         $noEvo = "Este pokemon no tiene linea evolutiva.";
-        $evoFases="noEvo";
-    }elseif($preevoId != NULL && $evo[0]["evoId"] != NULL){
-        // Evolución intermeda
-        $evoFases="evoInt";
+    }
+    if($preevoId != NULL && $evo[0]["evoID"] != NULL){
+        $style = "fullEvo";
     }else{
-        if($preevoId != NULL){
-            // Solo preevo
-            $evoFases="soloPre";
-        }else{
-            // Solo evo
-            $evoFases="soloEvo";
+        $style = "evo";
+    }
+    if($preevoId != NULL){
+        $evoData .= "<div class='bloqueEvo'><img class='".$style."' src='./resources/sprite/$preevoId.png'></div>";
+        $evoData .= "<div class='bloqueEvo'><img class='".$style."' src='./resources/interfaz/flecha.png'></div>";
+    }
+    $evoData .= "<div class='bloqueEvo'><img class='".$style."' src='./resources/sprite/$id.png'></div>";
+    if($stmtEvo ->rowCount() >1){
+        $evoData .= "<div class='bloqueEvo'><img class='".$style."' src='./resources/interfaz/flecha.png'></div>";
+        foreach ($evo as $evoIn) {
+            if($evoIn["evoID"] != NULL){
+                $evoID = $evoIn["evoID"];
+                $evoData .= "<div class='bloqueEvo'><img class='".$style."' src='./resources/sprite/$evoID.png'></div>";
+                $evoData .= "<div class='bloqueEvo'><img class='".$style."' src='./resources/interfaz/flecha.png'></div>";
+                $evoData .="</br>";
+            }
+        }
+    }else{
+        if($evo[0]["evoID"] != NULL){
+            $evoData .= "<div class='bloqueEvo'><img class='".$style."' src='./resources/interfaz/flecha.png'></div>";
+            $evoID = $evo[0]["evoID"];
+            $evoData .= "<div class='bloqueEvo'><img class='".$style."' src='./resources/sprite/$evoID.png'></div>";
         }
     }
-    $evoData = '<div id = "evoContainer row">';
-    if($evoFases=="noEvo"){
-        $evoData .='<div class="noEvo">
-            <img class="noEvoImg noEvoMarginImg imgEfecto" onclick="selectPkm('.$id.')" src="./resources/sprite/'.$id.'.png">
-            <h1 class="EvoTitulo">'.$pkm["Nombre"].'</h1>
-            <p class="noEvoTxt">Este Pokemon no evoluciona</p>
-        </div>';
-    }else if($evoFases=="evoInt"){
-        $evoData .='<div class="evoInt">
-            <img class="evoIntImg imgEfecto" onclick="selectPkm('.$preevoId.')" src="./resources/sprite/'.$preevoId.'.png">
-            <h1 class="EvoTitulo">'.$preevoName.'</h1>
-        </div>';
-        $evoData .='<div class="evoInt">
-            <img class="evoIntImg flechaMargin" src="./resources/interfaz/flecha.png">
-        </div>';
-        $evoData .='<div class="evoInt">
-            <img class="evoIntImg imgEfecto" onclick="selectPkm('.$id.')" src="./resources/sprite/'.$id.'.png">
-            <h1 class="EvoTitulo">'.$pkm["Nombre"].'</h1>
-        </div>';
-        $evoData .='<div class="evoInt">
-            <img class="evoIntImg flechaMargin" src="./resources/interfaz/flecha.png">
-        </div>';
-        $evoData .='<div class="evoInt">
-            <img class="evoIntImg imgEfecto" onclick="selectPkm('.$evo[0]["evoId"].')" src="./resources/sprite/'.$evo[0]["evoId"].'.png">
-            <h1 class="EvoTitulo">'.$evo[0]["evoName"].'</h1>
-        </div>';
-    }else if($evoFases=="soloPre"){
-        $evoData .='<div class="soloPre">
-            <img class="soloPreImg imgEfecto" onclick="selectPkm('.$preevoId.')" src="./resources/sprite/'.$preevoId.'.png">
-            <h1 class="EvoTitulo">'.$preevoName.'</h1>
-        </div>';
-        $evoData .='<div class="soloPre">
-            <img class="soloPreImg " src="./resources/interfaz/flecha.png">
-        </div>';
-        $evoData .='<div class="soloPre">
-            <img class="soloPreImg imgEfecto" onclick="selectPkm('.$id.')" src="./resources/sprite/'.$id.'.png">
-            <h1 class="EvoTitulo">'.$pkm["Nombre"].'</h1>
-        </div>';
-    }else{
-        $evoData .='<div class="soloPre">
-            <img class="soloPreImg imgEfecto" onclick="selectPkm('.$id.')" src="./resources/sprite/'.$id.'.png">
-            <h1 class="EvoTitulo">'.$pkm["Nombre"].'</h1>
-        </div>';
-        $evoData .='<div class="soloPre">';
-        if(count($evo) == 3){
-            $size= 40;
-        }else{
-            $size= 70;
-        }
-        for ($i=0; $i < count($evo); $i++) { 
-            $evoData .='<img style="width:'.$size.'%;" src="./resources/interfaz/flecha.png"><br>';
-            
-        }
-        $evoData .='</div>';
-        $evoData .='<div class="soloPre">';
-        for ($i=0; $i < count($evo); $i++) { 
-            $evoData .='<img class="soloPreImg imgEfecto" onclick="selectPkm('.$evo[$i]["evoId"].')" style="width:'.$size.'%;" src="./resources/sprite/'.$evo[$i]["evoId"].'.png">';
-            $evoData .='<p>'.$evo[$i]["evoName"].'</p>';
-        }
-        $evoData .='</div>';
+    if($noEvo != ""){
+        $evoData .= "<p>$noEvo</p>";
     }
-    $evoData .= '</div>'
+    $evoData .= '</div>';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -370,7 +327,7 @@
                 <div class="carousel-item">
                     <div class="dataContainer">
                         <!-- EVOLUCIÓN -->
-                        <h1 class="noEvoTxt" style="margin-top:1%;">Evoluciones</h1>
+                        <h1>Evoluciones</h1>
                         <div class="row evoRow">
                         <?php echo $evoData; ?>
                         </div>

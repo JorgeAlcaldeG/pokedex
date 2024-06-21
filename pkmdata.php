@@ -5,6 +5,7 @@
         exit;
     }
     include("./proc/conexion.php");
+    include("./proc/functions.php");
     $id = $_GET["id"];
     // Consulta para sacar datos del pokemon
     $pkmData = "SELECT p.pokemon_name AS 'Nombre',p.pokemon_description AS 'desc', p.pokemon_categoria AS 'Categoría', a.ability_name_es AS 'Habilidad1', a2.ability_name_es AS 'Habilidad2', a3.ability_name_es AS 'HabilidadOculta', t.type_name AS 'Tipo principal',p.pokemon_type1 AS 'tipo1',p.pokemon_type2 AS 'tipo2', t2.type_name AS 'Tipo secundario', r.region_name AS 'Región' FROM tbl_pokemon `p` LEFT JOIN tbl_types `t` ON p.pokemon_type1 = t.type_id LEFT JOIN tbl_types `t2` ON p.pokemon_type2 = t2.type_id LEFT JOIN tbl_region `r` ON p.pokemon_region = r.region_id LEFT JOIN tbl_ability `a` ON p.pokemon_ability1 = a.ability_id LEFT JOIN tbl_ability `a2` ON p.pokemon_ability2 = a2.ability_id LEFT JOIN tbl_ability `a3` ON p.pokemon_ability3 = a3.ability_id WHERE p.pokemon_id = :id LIMIT 1";
@@ -94,6 +95,7 @@
             $evoFases="soloEvo";
         }
     }
+    // var_dump($evolData[0]);
     $evoData = '<div id = "evoContainer row">';
     if($evoFases=="noEvo"){
         $evoData .='<div class="noEvo">
@@ -102,19 +104,23 @@
             <p class="noEvoTxt">Este Pokemon no evoluciona</p>
         </div>';
     }else if($evoFases=="evoInt"){
+        $evolData = formarFraseEvo(getEvoData($preevoId));
         $evoData .='<div class="evoInt">
             <img class="evoIntImg imgEfecto" onclick="selectPkm('.$preevoId.')" src="./resources/sprite/'.$preevoId.'.png">
             <h1 class="EvoTitulo">'.$preevoName.'</h1>
         </div>';
         $evoData .='<div class="evoInt">
             <img class="evoIntImg flechaMargin" src="./resources/interfaz/flecha.png">
+            <p class="noEvoTxt">'.$evolData[0].'</p>
         </div>';
         $evoData .='<div class="evoInt">
             <img class="evoIntImg imgEfecto" onclick="selectPkm('.$id.')" src="./resources/sprite/'.$id.'.png">
             <h1 class="EvoTitulo">'.$pkm["Nombre"].'</h1>
         </div>';
+        $evolData = formarFraseEvo(getEvoData($id));
         $evoData .='<div class="evoInt">
             <img class="evoIntImg flechaMargin" src="./resources/interfaz/flecha.png">
+            <p class="noEvoTxt">'.$evolData[0].'</p>
         </div>';
         $evoData .='<div class="evoInt">
             <img class="evoIntImg imgEfecto" onclick="selectPkm('.$evo[0]["evoId"].')" src="./resources/sprite/'.$evo[0]["evoId"].'.png">
@@ -125,8 +131,10 @@
             <img class="soloPreImg imgEfecto" onclick="selectPkm('.$preevoId.')" src="./resources/sprite/'.$preevoId.'.png">
             <h1 class="EvoTitulo">'.$preevoName.'</h1>
         </div>';
+        $evolData = formarFraseEvo(getEvoData($preevoId));
         $evoData .='<div class="soloPre">
             <img class="soloPreImg " src="./resources/interfaz/flecha.png">
+            <p class="noEvoTxt">'.$evolData[0].'</p>
         </div>';
         $evoData .='<div class="soloPre">
             <img class="soloPreImg imgEfecto" onclick="selectPkm('.$id.')" src="./resources/sprite/'.$id.'.png">
@@ -143,8 +151,11 @@
         }else{
             $size= 70;
         }
+        $evolData = formarFraseEvo(getEvoData($id));
+        // var_dump($evolData);
         for ($i=0; $i < count($evo); $i++) { 
-            $evoData .='<img style="width:'.$size.'%;" src="./resources/interfaz/flecha.png"><br>';
+            $evoData .='<img style="width:'.$size.'%;" src="./resources/interfaz/flecha.png"><br>
+            <p class="noEvoTxt">'.$evolData[$i].'</p>';
             
         }
         $evoData .='</div>';

@@ -1,4 +1,4 @@
-# pokedex (Legacy Version)
+# Pokedex (legacy Version)
 
 This is an old version of another pokedex project, to see the newest version click in the following [link](https://github.com/JorgeAlcaldeG/pokedex-react).
 This web allows users to search for Pokémon and view details such as their stats, types and abilities. It's connected to an external API developed by me.
@@ -15,13 +15,13 @@ This web allows users to search for Pokémon and view details such as their stat
 
 - Searching by name.
 - Visualization of detailed info.
-- Loading data from an external API (created by me using php)
+- Loading data from an external API (created by me using PHP)
 
 ## What I learnt?
 
 - Practice in Database design.
 - API fetch and data management.
-- Image optimization, searching lower rendering times.
+- Image optimization to reduce rendering times
 
 ## Things I would change
 
